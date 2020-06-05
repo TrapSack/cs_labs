@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
@@ -16,7 +16,9 @@ namespace Lab2
                 write += String.Format("{0}: ", let);
                 foreach (CultureInfo ci in CultureInfo.GetCultures(CultureTypes.AllCultures))
                 {
-                    if (!set.Contains(ci.TwoLetterISOLanguageName) && ci.TwoLetterISOLanguageName.Length == 2 && ci.EnglishName.Length <= 10 && ci.EnglishName.StartsWith(let))
+                    if (!set.Contains(ci.TwoLetterISOLanguageName) && ci.TwoLetterISOLanguageName.Length == 2 &&
+                     ci.EnglishName.Length <= 10 && 
+                     ci.EnglishName.StartsWith(let))
                     {
                         write += String.Format(String.Format(" {0} ({1});", ci.EnglishName, ci.TwoLetterISOLanguageName));
                         set.Add(ci.TwoLetterISOLanguageName);
@@ -33,15 +35,16 @@ namespace Lab2
             var lastUICulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = ci;
             System.Threading.Thread.CurrentThread.CurrentUICulture = ci;
-            string write = "";
-            write += String.Format("   {0} \n", ci.EnglishName);
+            StringBuilder write = new StringBuilder("");
+            write.AppendFormat("   {0} \n", ci.EnglishName);
             for (int i = 0; i < 12; i++)
             {
-                write += String.Format("{0,2}: {1}\n", i + 1, DateTimeFormatInfo.CurrentInfo.MonthNames[i]);
+                write.AppendFormat("{0,2}: {1}\n", i + 1, DateTimeFormatInfo.CurrentInfo.MonthNames[i]);
             }
             System.Threading.Thread.CurrentThread.CurrentCulture = lastCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = lastUICulture;
-            return write;
+            String temp = write.ToString();
+            return temp;
         }
         static public CultureInfo LanguageToCulture(string lang)
         {
